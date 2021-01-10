@@ -18,12 +18,31 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/view_pager_fragment">
+    app:startDestination="@id/articles_list_fragment">
 
     <fragment
-        android:id="@+id/view_pager_fragment"
+        android:id="@+id/articles_list_fragment"
         android:name="com.example.mynews.ui.ArticlesListFragment"
         tools:layout="@layout/fragment_news">
+
+        <action
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            android:id="@+id/action_navigation_repos_to_detail_repo"
+            app:destination="@id/detail_repo" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/detail_repo"
+        android:name="com.example.mynews.ui.ArticleDetailFragment"
+        android:label="detail"
+        tools:layout="@layout/article_detail_fragment" >
+        <argument
+            android:name="articleJson"
+            app:argType="string" />
     </fragment>
 
 </navigation>

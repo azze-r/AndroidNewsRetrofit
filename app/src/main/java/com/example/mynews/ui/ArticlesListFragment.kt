@@ -2,7 +2,6 @@ package com.example.mynews.ui
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +34,7 @@ class ArticlesListFragment : Fragment() {
         val apiService = RestApiService()
 
         apiService.getProducts {
-            val articleAdapter = ArticleAdapter(this)
+            val articleAdapter = ArticleAdapter()
             articleAdapter.addAll(it.articles)
             articleAdapter.notifyDataSetChanged()
             recyclerArticles.adapter?.notifyDataSetChanged()
