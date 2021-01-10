@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.example.mynews.R
 import com.example.mynews.data.Articles
 import com.example.mynews.utils.ImageUtils
@@ -26,25 +27,36 @@ class ArticleDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(ArticleDetailViewModel::class.java)
+
         val articleJson = arguments?.getString("articleJson")
         val article = Gson().fromJson(articleJson, Articles::class.java)
 
-        title.text = article.title
-        ImageUtils.loadImage(article.urlToImage, R.mipmap.ic_launcher, pic)
-        description.text = article.description
-        url.text = article.url
+        viewModel.setup(article)
 
-        if (article.title.isEmpty())
-            title.visibility = View.GONE
+        viewModel.title.observe(viewLifecycleOwner, Observer {
+            title.text = article.title
+            if (article.title.isEmpty())
+                title.visibility = View.GONE
+        })
 
-        if (article.urlToImage.isEmpty())
-            pic.visibility = View.GONE
+        viewModel.pic.observe(viewLifecycleOwner, Observer {
+            ImageUtils.loadImage(article.urlToImage, R.mipmap.ic_launcher, pic)
+            if (article.urlToImage.isEmpty())
+                pic.visibility = View.GONE
+        })
 
-        if (article.description.isEmpty())
-            description.visibility = View.GONE
+        viewModel.description.observe(viewLifecycleOwner, Observer {
+            description.text = article.description
+            if (article.description.isEmpty())
+                description.visibility = View.GONE
+        })
 
-        if (article.url.isEmpty())
-            url.visibility = View.GONE
+        viewModel.url.observe(viewLifecycleOwner, Observer {
+            url.text = article.url
+            if (article.url.isEmpty())
+                url.visibility = View.GONE
+        })
+
     }
 
 }

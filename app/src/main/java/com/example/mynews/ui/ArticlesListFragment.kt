@@ -2,15 +2,17 @@ package com.example.mynews.ui
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.mynews.R
 import com.example.mynews.adapters.ArticleAdapter
-import com.example.mynews.api.RestApiService
+import com.example.mynews.data.Articles
 import kotlinx.android.synthetic.main.articles_list_fragment.*
 
 class ArticlesListFragment : Fragment() {
@@ -28,18 +30,22 @@ class ArticlesListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ArticlesListViewModel::class.java)
 
-        val apiService = RestApiService()
+        val model: ArticlesListViewModel by viewModels {
+            Injection.viewModelFactory
+        }
 
-        apiService.getProducts {
+        model.liveData.observe(viewLifecycleOwner, { result ->
             val articleAdapter = ArticleAdapter()
-            articleAdapter.addAll(it.articles)
+            articleAdapter.addAll(result)
             articleAdapter.notifyDataSetChanged()
             recyclerArticles.adapter?.notifyDataSetChanged()
             recyclerArticles.adapter = articleAdapter
             recyclerArticles.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
+        })
+
+        model.getData()
+
 
     }
 
