@@ -14,14 +14,10 @@ class RestApiService {
             object : Callback<NewsResponse> {
                 override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
                     val productsResponse = response.body()
-                    Log.i("tryhard", call.request().url.toString())
-
-                    Log.i("tryhard", productsResponse.toString())
                     if (productsResponse != null)
                         onResult(productsResponse)
                 }
                 override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
-                    Log.i("tryhard","products error : "+t.localizedMessage)
                 }
             })
 

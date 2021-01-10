@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mynews.R
 import com.example.mynews.adapters.ArticleAdapter
 import com.example.mynews.api.RestApiService
+import kotlinx.android.synthetic.main.articles_list_fragment.*
 
 class ArticlesListFragment : Fragment() {
 
-    lateinit var recyclerArticles: RecyclerView
 
     private lateinit var viewModel: ArticlesListViewModel
 
@@ -23,7 +23,6 @@ class ArticlesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.articles_list_fragment, container, false)
-        recyclerArticles = root.findViewById(R.id.recyclerArticles)
         return root
     }
 
