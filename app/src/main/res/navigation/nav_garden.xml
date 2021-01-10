@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/view_pager_fragment"
-        android:name="com.example.mynews.ui.main.BlankFragment"
+        android:name="com.example.mynews.ui.ArticlesListFragment"
         tools:layout="@layout/fragment_news">
     </fragment>
 

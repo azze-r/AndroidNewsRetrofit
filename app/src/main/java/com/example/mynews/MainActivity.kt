@@ -10,13 +10,5 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-
-        Log.i("tryhard","lets begin")
-
-        val apiService = RestApiService()
-
-        apiService.getProducts {
-            Log.i("tryhard", it.totalResults.toString())
-        }
     }
 }
