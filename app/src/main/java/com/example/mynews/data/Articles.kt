@@ -15,7 +15,6 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 
 data class Articles (
-
 		@field:SerializedName("source") val source : Source,
 		@field:SerializedName("author") val author : String,
 		@field:SerializedName("title") val title : String,

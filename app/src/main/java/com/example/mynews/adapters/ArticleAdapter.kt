@@ -8,14 +8,14 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mynews.R
 import com.example.mynews.data.Articles
+import com.example.mynews.databinding.ArticleDetailFragmentBinding
+import com.example.mynews.databinding.ViewArticleBinding
 import com.example.mynews.utils.BaseListAdapter
 import com.example.mynews.utils.ImageUtils
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.view_article.view.*
 
-
 class ArticleAdapter : BaseListAdapter<Articles>(){
-
     override fun onCreateChildViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_article, parent, false))
     }

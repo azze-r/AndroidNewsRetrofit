@@ -9,12 +9,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.example.mynews.R
 import com.example.mynews.data.Articles
+import com.example.mynews.databinding.ArticleDetailFragmentBinding
 import com.example.mynews.utils.ImageUtils
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.article_detail_fragment.*
 
 class ArticleDetailFragment : Fragment() {
 
+    private lateinit var binding: ArticleDetailFragmentBinding
     private lateinit var viewModel: ArticleDetailViewModel
 
     override fun onCreateView(
@@ -26,6 +27,8 @@ class ArticleDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        binding = ArticleDetailFragmentBinding.inflate(layoutInflater)
+
         viewModel = ViewModelProvider(this).get(ArticleDetailViewModel::class.java)
 
         val articleJson = arguments?.getString("articleJson")
@@ -33,28 +36,28 @@ class ArticleDetailFragment : Fragment() {
 
         viewModel.setup(article)
 
-        viewModel.title.observe(viewLifecycleOwner, Observer {
-            title.text = article.title
+        viewModel.title.observe(viewLifecycleOwner, {
+            binding.title.text = article.title
             if (article.title.isEmpty())
-                title.visibility = View.GONE
+                binding.title.visibility = View.GONE
         })
 
-        viewModel.pic.observe(viewLifecycleOwner, Observer {
-            ImageUtils.loadImage(article.urlToImage, R.mipmap.ic_launcher, pic)
+        viewModel.pic.observe(viewLifecycleOwner, {
+            ImageUtils.loadImage(article.urlToImage, R.mipmap.ic_launcher, binding.pic)
             if (article.urlToImage.isEmpty())
-                pic.visibility = View.GONE
+                binding.pic.visibility = View.GONE
         })
 
-        viewModel.description.observe(viewLifecycleOwner, Observer {
-            description.text = article.description
+        viewModel.description.observe(viewLifecycleOwner, {
+            binding.description.text = article.description
             if (article.description.isEmpty())
-                description.visibility = View.GONE
+                binding.description.visibility = View.GONE
         })
 
-        viewModel.url.observe(viewLifecycleOwner, Observer {
-            url.text = article.url
+        viewModel.url.observe(viewLifecycleOwner, {
+            binding.url.text = article.url
             if (article.url.isEmpty())
-                url.visibility = View.GONE
+                binding.url.visibility = View.GONE
         })
 
     }
