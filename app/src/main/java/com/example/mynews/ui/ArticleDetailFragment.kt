@@ -15,19 +15,20 @@ import com.google.gson.Gson
 
 class ArticleDetailFragment : Fragment() {
 
-    private lateinit var binding: ArticleDetailFragmentBinding
     private lateinit var viewModel: ArticleDetailViewModel
+    private var _binding: ArticleDetailFragmentBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.article_detail_fragment, container, false)
+        _binding = ArticleDetailFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        binding = ArticleDetailFragmentBinding.inflate(layoutInflater)
 
         viewModel = ViewModelProvider(this).get(ArticleDetailViewModel::class.java)
 
@@ -36,30 +37,35 @@ class ArticleDetailFragment : Fragment() {
 
         viewModel.setup(article)
 
-        viewModel.title.observe(viewLifecycleOwner, {
+        viewModel.title.observe(viewLifecycleOwner, Observer {
             binding.title.text = article.title
             if (article.title.isEmpty())
                 binding.title.visibility = View.GONE
         })
 
-        viewModel.pic.observe(viewLifecycleOwner, {
+        viewModel.pic.observe(viewLifecycleOwner, Observer {
             ImageUtils.loadImage(article.urlToImage, R.mipmap.ic_launcher, binding.pic)
             if (article.urlToImage.isEmpty())
                 binding.pic.visibility = View.GONE
         })
 
-        viewModel.description.observe(viewLifecycleOwner, {
+        viewModel.description.observe(viewLifecycleOwner, Observer {
             binding.description.text = article.description
             if (article.description.isEmpty())
                 binding.description.visibility = View.GONE
         })
 
-        viewModel.url.observe(viewLifecycleOwner, {
+        viewModel.url.observe(viewLifecycleOwner, Observer {
             binding.url.text = article.url
             if (article.url.isEmpty())
                 binding.url.visibility = View.GONE
         })
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

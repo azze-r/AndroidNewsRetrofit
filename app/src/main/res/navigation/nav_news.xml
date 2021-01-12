@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/articles_list_fragment"
         android:name="com.example.mynews.ui.ArticlesListFragment"
-        tools:layout="@layout/fragment_news">
+        tools:layout="@layout/articles_list_fragment">
 
         <action
             app:popEnterAnim="@anim/slide_in_left"
